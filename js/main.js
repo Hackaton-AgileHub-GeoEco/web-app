@@ -3,7 +3,8 @@ $('#submit').click(function(){
     var userEmail = $('#userEmail').val();
     var userPhone = $('#userPhone').val();
     var locationId = $('#locationId').val();
-    $.post("join.php", {id: locationId, email: userEmail, phone: userPhone}, function(data, textStatus, xhr) {
+    var userName = $('#userName').val();
+    $.post("join.php", {id: locationId, name: userName, email: userEmail, phone: userPhone}, function(data, textStatus, xhr) {
 		console.debug("data: ", data);
 
 		if(data) {
@@ -13,7 +14,7 @@ $('#submit').click(function(){
 			alert("Error");
 		}
 	});
-})
+});
 
 function initialize() {
 	getCurrentLocation();
@@ -74,7 +75,7 @@ function onMapClick(event) {
 
 function getMarkerById(id){
     for(var i=0;i<markers.length;i++){
-        if(markers[i].id == id)
+        if(markers[i].id === id)
             return markers[i];
     }
 }
