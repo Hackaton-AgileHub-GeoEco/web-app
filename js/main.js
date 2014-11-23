@@ -1,4 +1,19 @@
 var map, markers = [];
+$('#submit').click(function(){
+    var userEmail = $('#userEmail').val();
+    var userPhone = $('#userPhone').val();
+    var locationId = $('#locationId').val();
+    $.post("join.php", {id: locationId, email: userEmail, phone: userPhone}, function(data, textStatus, xhr) {
+		console.debug("data: ", data);
+
+		if(data) {
+			getMarkerById(locationId).going++;
+                        $('#goingToEvent').modal('hide');
+		} else {
+			alert("Error");
+		}
+	});
+})
 
 function initialize() {
 	getCurrentLocation();
@@ -33,7 +48,7 @@ function getReportsList() {
 		console.debug("list: ", data);
 
 		for(var i = 0; i < data.length; i++) {
-			addMarker(data[i].id, getLatLng(data[i].lat, data[i].lon));
+			addMarker(data[i].id, getLatLng(data[i].lat, data[i].lon), data[i].going);
 		}
 	});
 }
@@ -50,18 +65,26 @@ function onMapClick(event) {
 		console.debug("data: ", data);
 
 		if(data) {
-			addMarker(data.id, event.latLng);
+			addMarker(data.id, event.latLng, 0);
 		} else {
 			// alert("Error");
 		}
 	});
 };
 
+function getMarkerById(id){
+    for(var i=0;i<markers.length;i++){
+        if(markers[i].id == id)
+            return markers[i];
+    }
+}
 function showPopupWindow(){
+    $('#locationId').val(this.id);
+    $('#peopleGoing').text(this.going);
 	$('#goingToEvent').modal('show');
 }
 
-function addMarker(id, position) {
+function addMarker(id, position, going) {
 	var marker = new google.maps.Marker({
 		position: position,
 		map: map,
@@ -69,6 +92,7 @@ function addMarker(id, position) {
 	});
 
 	marker.id = id;
+        marker.going = going;
 
 	google.maps.event.addListener(marker, "click", showPopupWindow);
 
