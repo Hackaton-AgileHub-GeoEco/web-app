@@ -1,4 +1,10 @@
-var map, markers = [];
+var
+	map, markers = [],
+	alertFadeTime = 200,
+	alertDelay = 1400,
+	markerStatus = ["img/markerOpened.png", "img/markerStarted.png"],
+	successAlert = $("#success"), errorAlert = $("#error");
+
 $('#submit').click(function(){
     var userEmail = $('#userEmail').val();
     var userPhone = $('#userPhone').val();
@@ -49,7 +55,7 @@ function getReportsList() {
 		console.debug("list: ", data);
 
 		for(var i = 0; i < data.length; i++) {
-			addMarker(data[i].id, getLatLng(data[i].lat, data[i].lon), data[i].going);
+			addMarker(data[i].id, getLatLng(data[i].lat, data[i].lon), data[i].going, data[i].status);
 		}
 	});
 }
@@ -60,16 +66,19 @@ function setMapLocation(lat, lng) {
 }
 
 function onMapClick(event) {
-	console.debug({lat: event.latLng.lat(), lng: event.latLng.lng()});
-
-	$.post("report.php", {lat: event.latLng.lat(), lng: event.latLng.lng()}, function(data, textStatus, xhr) {
-		console.debug("data: ", data);
-
-		if(data) {
+	$.ajax({
+		url: "report.php",
+		type: "POST",
+		data: {
+			lat: event.latLng.lat(),
+			lng: event.latLng.lng()
+		},
+		success: function(data) {
 			addMarker(data.id, event.latLng, 0);
-		} else {
-			// alert("Error");
-		}
+
+			showSuccessAlert();
+		},
+		error: showErrorAlert
 	});
 };
 
@@ -85,19 +94,29 @@ function showPopupWindow(){
 	$('#goingToEvent').modal('show');
 }
 
-function addMarker(id, position, going) {
+function addMarker(id, position, going, status) {
 	var marker = new google.maps.Marker({
 		position: position,
 		map: map,
-		animation: google.maps.Animation.DROP
+		animation: google.maps.Animation.DROP,
+		icon: markerStatus[status]
 	});
 
 	marker.id = id;
-        marker.going = going;
+	marker.going = going;
 
 	google.maps.event.addListener(marker, "click", showPopupWindow);
 
 	markers.push(marker);
+}
+
+function showSuccessAlert() {
+	successAlert.fadeIn(alertFadeTime).delay(alertDelay).fadeOut(alertFadeTime);
+}
+
+function showErrorAlert() {
+	console.debug(errorAlert);
+	errorAlert.fadeIn(alertFadeTime).delay(alertDelay).fadeOut(alertFadeTime);
 }
 
 function getLatLng(lat, lng) {
