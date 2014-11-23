@@ -57,6 +57,10 @@ function onMapClick(event) {
 	});
 };
 
+function showPopupWindow(){
+	$('#goingToEvent').modal('show');
+}
+
 function addMarker(id, position) {
 	var marker = new google.maps.Marker({
 		position: position,
@@ -65,6 +69,8 @@ function addMarker(id, position) {
 	});
 
 	marker.id = id;
+
+	google.maps.event.addListener(marker, "click", showPopupWindow);
 
 	markers.push(marker);
 }
