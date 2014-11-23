@@ -16,6 +16,9 @@ function initialize() {
 	getReportsList();
 
 	google.maps.event.addListener(map, "click", onMapClick);
+	for(var i=0;i<markers.length;i++){
+		google.maps.event.addListener(markers[i], "click", showPopupWindow);
+	}
 }
 
 google.maps.event.addDomListener(window, "load", initialize);
@@ -56,6 +59,10 @@ function onMapClick(event) {
 		}
 	});
 };
+
+function showPopupWindow(){
+	$('#goingToEvent').modal('show');
+}
 
 function addMarker(position) {
 	var marker = new google.maps.Marker({
