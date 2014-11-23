@@ -6,19 +6,21 @@ var
 	successAlert = $("#success"), errorAlert = $("#error");
 
 $('#submit').click(function(){
-    var userEmail = $('#userEmail').val();
-    var userPhone = $('#userPhone').val();
-    var locationId = $('#locationId').val();
-    var userName = $('#userName').val();
-    $.post("join.php", {id: locationId, name: userName, email: userEmail, phone: userPhone}, function(data, textStatus, xhr) {
-		console.debug("data: ", data);
+	var userName = $('#userName').val();
+	var userEmail = $('#userEmail').val();
+	var userPhone = $('#userPhone').val();
+	var locationId = $('#locationId').val();
 
-		if(data) {
-			getMarkerById(locationId).going++;
-                        $('#goingToEvent').modal('hide');
-		} else {
-			alert("Error");
-		}
+	$.ajax({
+		url: "http://192.168.1.217/geo/ecoservice/volunteer/" + locationId + "/" + userName + "/" + userPhone + "/" + userEmail,
+		success: function(data) {
+			if(data) {
+				getMarkerById(locationId).going = data;
+
+				$('#goingToEvent').modal('hide');
+			}
+		},
+		error: showErrorAlert
 	});
 });
 
@@ -51,11 +53,11 @@ function getCurrentLocation() {
 }
 
 function getReportsList() {
-	$.get("list.php", function(data) {
+	$.get("http://192.168.1.217/geo/ecoservice/list", function(data) {
 		console.debug("list: ", data);
 
 		for(var i = 0; i < data.length; i++) {
-			addMarker(data[i].id, getLatLng(data[i].lat, data[i].lon), data[i].going, data[i].status);
+			addMarker(data[i].Id, getLatLng(data[i].Latitude, data[i].Longitude), data[i].Volunteers, data[i].Status);
 		}
 	});
 }
@@ -67,14 +69,16 @@ function setMapLocation(lat, lng) {
 
 function onMapClick(event) {
 	$.ajax({
-		url: "report.php",
-		type: "POST",
+		url: "http://192.168.1.217/geo/ecoservice/trashsource/" + event.latLng.lat() + "/" + event.latLng.lng(),
+		// contentType: "application/json",
+		// crossDomain: true,
+		type: "GET",
 		data: {
-			lat: event.latLng.lat(),
-			lng: event.latLng.lng()
+			Lat: event.latLng.lat(),
+			Lon: event.latLng.lng()
 		},
 		success: function(data) {
-			addMarker(data.id, event.latLng, 0);
+			addMarker(data.Id, event.latLng, 0, 0);
 
 			showSuccessAlert();
 		},
@@ -83,14 +87,15 @@ function onMapClick(event) {
 };
 
 function getMarkerById(id){
-    for(var i=0;i<markers.length;i++){
-        if(markers[i].id === id)
-            return markers[i];
-    }
+	for(var i=0;i<markers.length;i++){
+		if(markers[i].id == id) {
+			return markers[i];
+		}
+	}
 }
 function showPopupWindow(){
-    $('#locationId').val(this.id);
-    $('#peopleGoing').text(this.going);
+	$('#locationId').val(this.id);
+	$('#peopleGoing').text(this.going);
 	$('#goingToEvent').modal('show');
 }
 
@@ -115,7 +120,6 @@ function showSuccessAlert() {
 }
 
 function showErrorAlert() {
-	console.debug(errorAlert);
 	errorAlert.fadeIn(alertFadeTime).delay(alertDelay).fadeOut(alertFadeTime);
 }
 
