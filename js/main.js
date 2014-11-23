@@ -31,12 +31,16 @@ function getCurrentLocation() {
 function getReportsList() {
 	$.get("list.php", function(data) {
 		console.debug("list: ", data);
+
+		for(var i = 0; i < data.length; i++) {
+			addMarker(getLatLng(data[i].lat, data[i].lon));
+		}
 	});
 }
 
 function setMapLocation(lat, lng) {
 	map.panTo(getLatLng(lat, lng));
-	map.setZoom(12);
+	map.setZoom(14);
 }
 
 function onMapClick(event) {
@@ -56,7 +60,8 @@ function onMapClick(event) {
 function addMarker(position) {
 	var marker = new google.maps.Marker({
 		position: position,
-		map: map
+		map: map,
+		animation: google.maps.Animation.DROP
 	});
 
 	markers.push(marker);
