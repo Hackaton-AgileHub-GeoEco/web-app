@@ -1,0 +1,42 @@
+[
+    {
+        "id": "1",
+        "lat": "10.456",
+        "lon": "40.234",
+        "status": "1",
+        "going": "5",
+        "photo": "http://lorempixel.com/200/200"
+    },
+    {
+        "id": "2",
+        "lat": "45.456",
+        "lon": "40.234",
+        "status": "1",
+        "going": "4",
+        "photo": "http://lorempixel.com/200/200"
+    },
+    {
+        "id": "3",
+        "lat": "15.456",
+        "lon": "40.234",
+        "status": "2",
+        "going": "3",
+        "photo": "http://lorempixel.com/200/200"
+    },
+    {
+        "id": "4",
+        "lat": "35.456",
+        "lon": "40.234",
+        "status": "1",
+        "going": "5",
+        "photo": "http://lorempixel.com/200/200"
+    },
+    {
+        "id": "5",
+        "lat": "25.456",
+        "lon": "50.22",
+        "status": "0",
+        "going": "5",
+        "photo": "http://lorempixel.com/200/200"
+    }
+]
