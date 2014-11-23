@@ -18,41 +18,44 @@
 	</head>
 	<body>
 		<div id="map-canvas"></div>
-                
-                <div class="modal fade" id="goingToEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                          <h4 class="modal-title" id="exampleModalLabel">Participa la eveniment</h4>
-                          <span class="glyphicon glyphicon-user"></span><span id="peopleGoing"></span>
-                        </div>
-                        <div class="modal-body">
-                          <form role="form">
-                              <input type="hidden" class="form-control" id="locationId" name="locationId">
-                            <div class="form-group">
-                              <label for="userEmail" class="control-label">Email</label>
-                              <input type="text" class="form-control" id="userEmail" name="userEmail">
-                            </div>
-                            <div class="form-group">
-                              <label for="userPhone" class="control-label">Phone number:</label>
-                              <input type="text" class="form-control" id="userPhone" name="userPhone">
-                            </div>
-                          </form>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span class="glyphicon glyphicon-thumbs-down"></span></button>
-                          <button type="button" class="btn btn-success" id="submit">Join the event <span class="glyphicon glyphicon-thumbs-up"></span></button>
-                        </div>
-                      </div>
-                    </div>
-                </div>
+
+		<div class="modal fade" id="goingToEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				  <h4 class="modal-title" id="exampleModalLabel">Participa la eveniment</h4>
+				  <span class="glyphicon glyphicon-user"></span><span id="peopleGoing"></span>
+				</div>
+				<div class="modal-body">
+				  <form role="form">
+					  <input type="hidden" class="form-control" id="locationId" name="locationId">
+					<div class="form-group">
+					  <label for="userEmail" class="control-label">Email</label>
+					  <input type="text" class="form-control" id="userEmail" name="userEmail">
+					</div>
+					<div class="form-group">
+					  <label for="userPhone" class="control-label">Phone number:</label>
+					  <input type="text" class="form-control" id="userPhone" name="userPhone">
+					</div>
+				  </form>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close <span class="glyphicon glyphicon-thumbs-down"></span></button>
+				  <button type="button" class="btn btn-success" id="submit">Join the event <span class="glyphicon glyphicon-thumbs-up"></span></button>
+				</div>
+			  </div>
+			</div>
+		</div>
+
+		<div id="success" class="feedback alert alert-success" role="alert">Success.</div>
+		<div id="error" class="feedback alert alert-danger" role="alert">Error.</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
 		<script src="js/vendor/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
-                
-                
+
+
 	</body>
 </html>

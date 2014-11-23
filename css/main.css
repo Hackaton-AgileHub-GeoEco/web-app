@@ -8,10 +8,18 @@ html, body {
 }
 
 span#peopleGoing {
-    font-size: 14px;
-    padding-left: 5px;
+	font-size: 14px;
+	padding-left: 5px;
 }
 
 span.glyphicon {
-    padding-left: 5px;
+	padding-left: 5px;
+}
+
+.feedback {
+	position: absolute;
+	display: none;
+	top: 20px;
+	right: 20px;
+	width: 300px;
 }
