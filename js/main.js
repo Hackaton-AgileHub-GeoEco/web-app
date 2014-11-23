@@ -33,7 +33,7 @@ function getReportsList() {
 		console.debug("list: ", data);
 
 		for(var i = 0; i < data.length; i++) {
-			addMarker(getLatLng(data[i].lat, data[i].lon));
+			addMarker(data[i].id, getLatLng(data[i].lat, data[i].lon));
 		}
 	});
 }
@@ -50,19 +50,21 @@ function onMapClick(event) {
 		console.debug("data: ", data);
 
 		if(data) {
-			addMarker(event.latLng);
+			addMarker(data.id, event.latLng);
 		} else {
 			// alert("Error");
 		}
 	});
 };
 
-function addMarker(position) {
+function addMarker(id, position) {
 	var marker = new google.maps.Marker({
 		position: position,
 		map: map,
 		animation: google.maps.Animation.DROP
 	});
+
+	marker.id = id;
 
 	markers.push(marker);
 }
