@@ -6,3 +6,8 @@ html, body {
 #map-canvas {
 	height: 100%;
 }
+
+span.peopleGoing {
+    display: block;
+    font-size: 14px;
+}
